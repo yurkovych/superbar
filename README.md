@@ -1,0 +1,1 @@
+all followed channels in sidebar

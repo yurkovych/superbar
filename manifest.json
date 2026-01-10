@@ -1,0 +1,38 @@
+{
+	"manifest_version": 3,
+	"name": "superbar",
+	"version": "1.0.0",
+	"description": "all followed channels in sidebar",
+	"permissions": [
+		"activeTab",
+		"scripting",
+		"webRequest",
+		"storage"
+	],
+	"host_permissions": [
+		"https://www.twitch.tv/*"
+	],
+	"action": {
+		"default_popup": "popup.html",
+		"default_icon": {}
+	},
+	"content_scripts": [
+		{
+			"matches": ["https://www.twitch.tv/*"],
+			"js": ["content.js"],
+			"css": ["content.css"]
+		}
+	],
+	"web_accessible_resources": [
+		{
+			"resources": ["blocked-categories.txt"],
+			"matches": ["https://www.twitch.tv/*"]
+		}
+	],
+	"icons": {},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "permabasher@gmail.com"
+		}
+	}
+}

@@ -1,0 +1,54 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	// font-size: 100%;
+	// font: inherit;
+	// vertical-align: baseline;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+hr {
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+}
+
+img, svg {
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+}
+
+button {
+	-webkit-appearance: none;
+	appearance: none;
+	border: none;
+	outline: 0;
+	line-height: 1;
+	cursor: pointer;
+	background: none;
+	line-height: 1;
+}
+
+*:focus {
+	outline: none;
+}
+
+input, button, select, optgroup, textarea {
+	font-family: inherit;
+	line-height: inherit;
+}
+
+a {
+	text-decoration: none;
+}

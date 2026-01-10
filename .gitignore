@@ -1,0 +1,11 @@
+*.png
+*.psd
+node_modules
+old
+*.ico
+
+/script.js
+/style.css
+/content.js
+/content.css
+*.zip
