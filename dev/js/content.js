@@ -1,204 +1,100 @@
 import {toast, tl} from './modules/toast.js';
-let categories;
-const gameLinkSelector = 'a[data-test-selector="GameLink"]';
-let tower;
-async function init() {
+import {goGetEm} from './modules/request.js';
 
-	if (!categories) {
-		categories = await getCategories();
-		if (!categories) {
-			setTimeout(init, 2000)
-			// toast('Retrying to get categories from storage in 2s');
-			return;
-		}
-	}
+let container, superbar, vanilla, collapse, scrollable, sideNavOverlayWrapper, interval;
 
-	if (!tower) {
-		tower = document.querySelector('.ScTower-sc-1sjzzes-0.hTjsYU.tw-tower');
-		if (!tower) {
-			setTimeout(init, 1000);
-			// toast('No tower element. Retrying in 1s');
-			return;
-		}
-	}
+function init() {
 
-	observeTower();
-	observeBody();
-
-	const scrollable = document.querySelector('.root-scrollable');
-	scrollable.addEventListener('scroll', onScroll);
-
-}
-
-if (window.location.href.includes('twitch.tv/directory')) {
-	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-	else init();
-}
-
-function observeBody() {
-	const targetNode = document.body;
-	const observer = new MutationObserver(checkTower);
-
-	observer.observe(targetNode, {
-		childList: true,
-		subtree: true
-	});
-}
-
-function checkTower() {
-	const newTower = document.querySelector('.ScTower-sc-1sjzzes-0.hTjsYU.tw-tower');
-	if (newTower && newTower !== tower) {
-		observer.disconnect();
-		observeTower();
-	}
-}
-
-
-async function getCategories() {
-	const result = await chrome.storage.local.get('categories');
-	if (chrome.runtime.lastError) {
-		toast(0, `Failed to get categories from storage. Error: ${chrome.runtime.lastError}`);
-		return null;
-	}
-	else if (result?.categories?.length) {
-		return result.categories;
-	}
-	else {
-		toast('No error, but no categories from storage');
-		return [];
-	}
-}
-
-async function updateCategories(cat) {
-	const result = await chrome.storage.local.set({'categories': categories});
-	if (chrome.runtime.lastError) {
-		toast(0, `Failed to update storage. Error: ${chrome.runtime.lastError}`);
-		return null;
-	}
-	else {
-		toast(1, `Guess "${cat}" category was blocked and put into storage`);
-	}
-}
-
-
-let observer;
-
-function observeTower() {
-
-	tower = document.querySelector('.ScTower-sc-1sjzzes-0.hTjsYU.tw-tower');
-
-	if (!tower) {
-		toast(0, 'No tower in observeTower. Retry in 1s');
-		setTimeout(observeTower, 1000);
+	let vanilla = document.querySelector('div[aria-label="Followed Channels"]');
+	if (!vanilla) {
+		setTimeout(init, 10);
 		return;
 	}
-
-	const targetNode = document.body; // observing body is fine. few mutations
-	observer = new MutationObserver(mutationCb);
-
-	observer.observe(tower, {
-		childList: true,
-		subtree: true
-	});
-}
-
-function mutationCb() {
-
-	observer.disconnect();
-
-	const tower = document.querySelector('.ScTower-sc-1sjzzes-0.hTjsYU.tw-tower');
-
-	if (!tower) {
-		toast(0, 'No tower in mutation callback. Retry in 1s');
-		setTimeout(mutationCb, 1000);
-		return;
-	}
-
-	const els = tower.querySelectorAll(':scope > div:not(.processed)');
 	
-	if (els) filterElements(els);
+	container = vanilla.closest('.Layout-sc-1xcs6mc-0.dtSdDz');
+	// if (!container) {
+	// 	tl(no);
+	// 	setTimeout(init, 100);
+	// }
+	collapse = document.querySelector('.collapse-toggle');
+	scrollable = document.querySelector('.scrollable-area');
+	sideNavOverlayWrapper = document.querySelector('.side-nav__overlay-wrapper');
 
-	observeTower();
+	collapse.style = 'display: none !important';
+	scrollable.style = 'overflow: visible !important; overflow-x: visible !important; z-index: 9999';
+	sideNavOverlayWrapper.style = 'overflow: visible !important';
 
+	const shits = container.querySelectorAll(':scope > *');
+	for (const shit of shits)	shit.style = 'display: none !important';
+
+	superbar = document.createElement('div');
+	superbar.id = 'superbar';
+	container.append(superbar);
+	interval = setInterval(req, 60000);
+	req();
 }
 
-function filterElements(els) {
+async function req() {
 
-	for (const el of els) {
-		const gameLink = el.querySelector(gameLinkSelector);
+	const response = await goGetEm();
+	const channels = response.data.currentUser.followedLiveUsers.edges;
 
-		if (gameLink) {
-			const slug = parseLinkToCategory(gameLink);
-			const index = categories.indexOf(slug);
+	const html = document.createDocumentFragment();
 
-			if (index !== -1)	el.remove();
-			else if (!el.classList.contains('processed')) {
-				el.classList.add('processed');
-				addBlockCatButton(gameLink);
-			}
-		}
+	for (const channel of channels) {
+
+		const name = channel.node.displayName;
+		const pic = channel.node.profileImageURL;
+		const game = channel.node.stream.game.name;
+		const title = channel.node.stream.title;
+		const count = parseInt(channel.node.stream.viewersCount);
+		const url = `https://www.twitch/${name}`;
+
+		const item = document.createElement('div');
+		item.classList.add('superbar-item');
+		html.append(item);
+		
+		const anchor = document.createElement('a')
+		anchor.href = url;
+		anchor.classList.add('superbar-anchor')
+		item.append(anchor);
+
+		const img = document.createElement('img');
+		img.classList.add('superbar-img');
+		img.src = pic;
+		anchor.append(img);
+
+		const float = document.createElement('div');
+		float.classList.add('superbar-float');
+		item.append(float);
+		
+		const titleEl = document.createElement('p');
+		titleEl.classList.add('superbar-title');
+		titleEl.textContent = `${name} · ${game}`;
+		float.append(titleEl);
+
+		const descrEl = document.createElement('p');
+		descrEl.textContent = title;
+		float.append(descrEl);
+
+		const liveEl = document.createElement('div');
+		liveEl.classList.add('superbar-live');
+		float.append(liveEl);
+
+		const redDot = document.createElement('div');
+		redDot.classList.add('superbar-reddot');
+		liveEl.append(redDot);
+
+		const liveInfo = document.createElement('span');
+		liveInfo.classList.add('superbar-liveinfo');
+		liveInfo.textContent = `Live | ${count} viewers`;
+		liveEl.append(liveInfo);
+
 	}
 
+	superbar.innerHTML = '';
+	superbar.append(html);
+
 }
 
-function parseLinkToCategory(gameLink) {
-	const href = gameLink.href;
-	const slug = href.split('/').pop();
-	return slug;
-}
-
-function addBlockCatButton(gameLink) {
-	const button = generateBlockButton();
-	const parent = gameLink.parentNode;
-	parent.append(button);
-}
-
-function generateBlockButton() {
-	const button = document.createElement('button');
-	button.classList.add('huitch-block-button');
-	button.textContent = '×';
-	button.addEventListener('click', blockCategory);
-	return button;
-}
-
-let blocking = false;
-
-async function blockCategory(e) {
-	
-	if (blocking) return;
-	blocking = true;
-
-	categories = await getCategories();
-
-	if (!categories) {
-		toast(0, 'something is wrong with getting categories from storage');
-		blocking = false;
-		return;
-	}
-
-	const parent = this.closest('div');
-	const gameLink = parent.querySelector(gameLinkSelector);
-	const cat = parseLinkToCategory(gameLink);
-
-	categories.push(cat);
-
-	const tower = document.querySelector('.ScTower-sc-1sjzzes-0.hTjsYU.tw-tower');
-	const els = tower.querySelectorAll(':scope > div');
-
-	filterElements(els);
-
-	await updateCategories(cat);
-	
-	blocking = false;
-}
-
-function onScroll(e) {
-	let scrollCounter = e.target.scrollTop;
-	if (scrollCounter > 800) {
-		const items = document.querySelectorAll('.ScTower-sc-1sjzzes-0.hTjsYU.tw-tower > div');
-		const firstSix = Array.from(items).slice(0, 6);
-		for (const el of firstSix) {
-			el.remove();
-		}
-	}
-}
+init();

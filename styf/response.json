@@ -1,0 +1,183 @@
+{
+    "data": {
+        "currentUser": {
+            "followedLiveUsers": {
+                "edges": [
+                    {
+                        "node": {
+                            "displayName": "HollaDieWaldfee",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/301b72c3-d4a8-459e-ac7a-d7d2f9a083cd-profile_image-70x70.png",
+                            "stream": {
+                                "title": "[Sauercrowd] Erstes mal Gnomeregan Lvl. 32 Druide Tank HC // Folgt @holladiezweitfee // !lvm *#werbung",
+                                "viewersCount": 350,
+                                "game": {
+                                    "name": "World of Warcraft"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "AdmiralBahroo",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/d57c5237-ca9d-432c-9560-d5e62b28ce80-profile_image-70x70.png",
+                            "stream": {
+                                "title": "[Bloodmoon Diff] Darkest Dungeon Finale?",
+                                "viewersCount": 6147,
+                                "game": {
+                                    "name": "Darkest Dungeon"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "shroud",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/c754eebf-745b-4e0a-814a-10bcaecaabbc-profile_image-70x70.png",
+                            "stream": {
+                                "title": "SATURDAYS ARE FOR THE GAMERS",
+                                "viewersCount": 4724,
+                                "game": {
+                                    "name": "ARC Raiders"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "summit1g",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/99aa4739-21d6-40af-86ae-4b4d3457fce4-profile_image-70x70.png",
+                            "stream": {
+                                "title": "Watching Live Formula E Racing w/ CSN & Hutch / Lvndmark #ad @summit1g !starforge @StarforgeSystems",
+                                "viewersCount": 4330,
+                                "game": {
+                                    "name": "Special Events"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "MidOne",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/c0f3eb56-bc04-4b0e-ab48-99034a1748db-profile_image-70x70.png",
+                            "stream": {
+                                "title": "a day in a life of a pro player grinding",
+                                "viewersCount": 2467,
+                                "game": {
+                                    "name": "Dota 2"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "MembTV",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/53675ec2-5ea4-461a-b2a7-58806a6d4b1b-profile_image-70x70.png",
+                            "stream": {
+                                "title": "Redbull Casting 8 days left!! !RBW !VPN !GL",
+                                "viewersCount": 1330,
+                                "game": {
+                                    "name": "Age of Empires II"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "dota2_maincast",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/f2683fc9-1c2a-4b85-9c38-487aeaa0357f-profile_image-70x70.png",
+                            "stream": {
+                                "title": "[UA] Team Liquid vs Zero Tenacity (1-0) BO3 | DreamLeague Season 28 WEU CQ | by @flunkyflame",
+                                "viewersCount": 920,
+                                "game": {
+                                    "name": "Dota 2"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "doubleespresso",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/da6ad971-c9ab-4426-aee4-09d82ebbaed9-profile_image-70x70.png",
+                            "stream": {
+                                "title": "граємо БК, потім трай вбити королеву в Арку  (23-00 старт)",
+                                "viewersCount": 213,
+                                "game": {
+                                    "name": "Dota 2"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "GodHunt",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/03e2bf44-8c58-4b1f-a21d-d4eb355235a9-profile_image-70x70.png",
+                            "stream": {
+                                "title": "CyberPunk  - перший раз. Positive vibes присутні Стрiм №2",
+                                "viewersCount": 97,
+                                "game": {
+                                    "name": "Cyberpunk 2077"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "vERuNdA",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/a926ebf1-3b4f-4ce0-9886-5e991c3c6604-profile_image-70x70.jpg",
+                            "stream": {
+                                "title": "🎮 Weekend - dneska to není dobrý.",
+                                "viewersCount": 88,
+                                "game": {
+                                    "name": "Dota 2"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "CaspeRRRTV",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/40b19a0f-63ab-47c5-b643-0ed178131eee-profile_image-70x70.png",
+                            "stream": {
+                                "title": "Вечірній зачілочний покер",
+                                "viewersCount": 69,
+                                "game": {
+                                    "name": "Poker"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "skorssa",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/c2333800-70d5-404d-a08b-d5daa64a326e-profile_image-70x70.png",
+                            "stream": {
+                                "title": "? == ?",
+                                "viewersCount": 16,
+                                "game": {
+                                    "name": "PUBG: BATTLEGROUNDS"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "displayName": "DYNAMO_CS2",
+                            "profileImageURL": "https://static-cdn.jtvnw.net/jtv_user_pictures/be60d829-10a9-408a-9c48-426aa06b02e7-profile_image-70x70.png",
+                            "stream": {
+                                "title": "🔴FACEIT CS 2 🔴 | Збір для 501 ОБМП  | [🇺🇦/🇬🇧/🇵🇱] !commands",
+                                "viewersCount": 8,
+                                "game": {
+                                    "name": "Counter-Strike"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "extensions": {
+        "durationMilliseconds": 60,
+        "requestID": "01KEMQZ8M0M7T53PJF8AAW9NWP"
+    }
+}
