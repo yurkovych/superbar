@@ -20,14 +20,14 @@ const query = `
 	}
 `;
 
-export async function goGetEm() {
+export async function goGetEm(token) {
 	const href = 'https://gql.twitch.tv/gql';
 
 	const request = {
 		'method': 'POST',
 		'headers': {
 			"Client-Id": "kimne78kx3ncx6brgo4mv6wki5h1ko",
-			"Authorization": "OAuth " + document.cookie.match(/auth-token=([^;]+)/)[1],
+			"Authorization": "OAuth " + token,
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({'query': query})

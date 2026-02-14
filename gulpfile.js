@@ -18,7 +18,7 @@ import zip from 'gulp-zip';
 // paths
 const scssSrc =  {
 	'watch': 'dev/scss/**/*.scss',
-	'src': ['dev/scss/content.scss'],
+	'src': ['dev/scss/content.scss', 'dev/scss/popup.scss'],
 	'dest': './'
 };
 const jsSrc =  {
@@ -30,8 +30,11 @@ const ffSrc = [
 	'./manifest.json',
 	'./content.js',
 	'./content.css',
+	'./popup.css',
 	'./popup.html',
-	'./popup.js'
+	'./popup.js',
+	'./icons/*.png'
+
 ];
 
 export function compileSass() {
@@ -41,14 +44,14 @@ export function compileSass() {
 			.on('error', sass.logError)
 		)
 		.on('error', notify.onError({
-			title: 'SASS Error',
+			title: 'SASS Content Error',
 			message: '<%= error.message %>',
 			icon: path.join('.\\', 'dev', 'icons', 'sass-error.ico')
 		}))
 		.pipe(dest(scssSrc.dest))
 		.pipe(notify({
 			title: 'SASS Compiled',
-			message: 'Successfully compiled style.css',
+			message: 'Successfully compiled',
 			icon: path.join('.\\', 'dev', 'icons', 'sass.ico'),
 			sound: false,
 			onLast: true
@@ -80,8 +83,8 @@ export function compileJs() {
 
 export function ff() {
 	return (
-		src(ffSrc)
-		.pipe(zip('huitch.zip'))
+		src(ffSrc, { base: './', encoding: false })
+		.pipe(zip('twitch-superbar.zip'))
 		.pipe(dest('./'))
 	);
 }

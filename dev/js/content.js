@@ -1,42 +1,69 @@
 import {toast, tl} from './modules/toast.js';
 import {goGetEm} from './modules/request.js';
 
-let container, superbar, vanilla, collapse, scrollable, sideNavOverlayWrapper, interval;
+let container, superbar, vanilla, collapse, scrollable, sideNavOverlayWrapper, interval, token, sidenav, tokenTries = 0, observer;
 
 function init() {
 
-	let vanilla = document.querySelector('div[aria-label="Followed Channels"]');
-	if (!vanilla) {
-		setTimeout(init, 10);
+	token = checkToken();
+	if (!token) {
+		toast('No auth token');
+		tokenTries++;
+		if (tokenTries < 5) setTimeout(init, 1000);
+		else (toast('No auth token present. Extension stopped. If you\'re not logged in, do it'));
 		return;
 	}
+
+	if (observer) {
+		observer.disconnect();
+		observer = null;
+	}
+	// tl('observer disconnected');
+
+
+	let vanilla = document.querySelector('div[aria-label="Followed Channels"]');
+	if (!vanilla) {
+		// tl('observer added');
+		observer = new MutationObserver(init);
+		observer.observe(document.body, {childList: true, subtree: true});
+		// tl('No vanilla bar');
+		return;
+	}
+
 	
-	container = vanilla.closest('.Layout-sc-1xcs6mc-0.dtSdDz');
+	container = vanilla.parentElement;
 	// if (!container) {
 	// 	tl(no);
 	// 	setTimeout(init, 100);
 	// }
 	collapse = document.querySelector('.collapse-toggle');
 	scrollable = document.querySelector('.scrollable-area');
+	sidenav = document.querySelector('.side-nav');
 	sideNavOverlayWrapper = document.querySelector('.side-nav__overlay-wrapper');
 
 	collapse.style = 'display: none !important';
-	scrollable.style = 'overflow: visible !important; overflow-x: visible !important; z-index: 9999';
-	sideNavOverlayWrapper.style = 'overflow: visible !important';
+	
+	scrollable.style.setProperty("overflow", "visible", "important");
+	scrollable.style.zIndex = "9999";
+	
+	sideNavOverlayWrapper.style.setProperty("overflow", "visible", "important");
+	
+	sidenav.style.setProperty("width", "5rem", "important");
 
-	const shits = container.querySelectorAll(':scope > *');
-	for (const shit of shits)	shit.style = 'display: none !important';
+	const garbages = container.querySelectorAll(':scope > *');
+	for (const garbage of garbages)	garbage.style = 'display: none !important';
 
 	superbar = document.createElement('div');
 	superbar.id = 'superbar';
 	container.append(superbar);
+	superbar.addEventListener('click', poppy);
 	interval = setInterval(req, 60000);
 	req();
 }
 
 async function req() {
 
-	const response = await goGetEm();
+	const response = await goGetEm(token);
 	const channels = response.data.currentUser.followedLiveUsers.edges;
 
 	const html = document.createDocumentFragment();
@@ -48,7 +75,7 @@ async function req() {
 		const game = channel.node.stream.game.name;
 		const title = channel.node.stream.title;
 		const count = parseInt(channel.node.stream.viewersCount);
-		const url = `https://www.twitch/${name}`;
+		const url = `https://www.twitch.tv/${name}`;
 
 		const item = document.createElement('div');
 		item.classList.add('superbar-item');
@@ -95,6 +122,23 @@ async function req() {
 	superbar.innerHTML = '';
 	superbar.append(html);
 
+}
+
+function poppy(e) {
+	const target = e.target;
+	const anchor = target.closest('.superbar-anchor');
+	if (!anchor) return;
+
+	e.preventDefault();
+	const url = anchor.href;
+	window.history.pushState({}, "", url);
+	window.dispatchEvent(new PopStateEvent("popstate"));
+}
+
+function checkToken() {
+	const cookie = document.cookie.match(/auth-token=([^;]+)/);
+	if (cookie && cookie.length > 1) return cookie[1];
+	else return null;
 }
 
 init();
