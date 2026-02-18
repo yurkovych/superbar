@@ -71,5 +71,7 @@
 	color: #ADADB8;
 }
 
+div[data-daddy] > *:not(#superbar) {display: none !important};
+
 //
 

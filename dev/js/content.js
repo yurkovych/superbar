@@ -1,7 +1,7 @@
 import {toast, tl} from './modules/toast.js';
 import {goGetEm} from './modules/request.js';
 
-let container, superbar, vanilla, collapse, scrollable, sideNavOverlayWrapper, interval, token, sidenav, tokenTries = 0, observer;
+let daddy, superbar, vanilla, collapse, scrollable, sideNavOverlayWrapper, interval, token, sidenav, tokenTries = 0, observer;
 
 function init() {
 
@@ -31,7 +31,7 @@ function init() {
 	}
 
 	
-	container = vanilla.parentElement;
+	daddy = vanilla.parentElement;
 	// if (!container) {
 	// 	tl(no);
 	// 	setTimeout(init, 100);
@@ -41,21 +41,23 @@ function init() {
 	sidenav = document.querySelector('.side-nav');
 	sideNavOverlayWrapper = document.querySelector('.side-nav__overlay-wrapper');
 
+	daddy.dataset.daddy = '';
+
 	collapse.style = 'display: none !important';
 	
 	scrollable.style.setProperty("overflow", "visible", "important");
 	scrollable.style.zIndex = "9999";
 	
-	sideNavOverlayWrapper.style.setProperty("overflow", "visible", "important");
-	
 	sidenav.style.setProperty("width", "5rem", "important");
 
-	const garbages = container.querySelectorAll(':scope > *');
-	for (const garbage of garbages)	garbage.style = 'display: none !important';
+	sideNavOverlayWrapper.style.setProperty("overflow", "visible", "important");
+
+	// const garbages = container.querySelectorAll(':scope > *');
+	// for (const garbage of garbages)	garbage.style = 'display: none !important';
 
 	superbar = document.createElement('div');
 	superbar.id = 'superbar';
-	container.append(superbar);
+	daddy.append(superbar);
 	superbar.addEventListener('click', poppy);
 	interval = setInterval(req, 60000);
 	req();
