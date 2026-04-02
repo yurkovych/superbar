@@ -74,7 +74,7 @@ async function req() {
 
 		const name = channel.node.displayName;
 		const pic = channel.node.profileImageURL;
-		const game = channel.node.stream.game.name;
+		const game = channel.node.stream.game?.name || "No Category";
 		const title = channel.node.stream.title;
 		const count = parseInt(channel.node.stream.viewersCount);
 		const url = `https://www.twitch.tv/${name}`;
